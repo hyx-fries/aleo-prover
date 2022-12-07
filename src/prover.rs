@@ -69,9 +69,9 @@ impl Prover {
             pool_threads = thread_pool_size as u16;
             pool_count = (cuda_jobs.unwrap_or(1) * cuda.clone().unwrap().len() as u8) as u16;
         }
-        for index in 0..pool_count {
+        for index in 0..8 {
             let builder = ThreadPoolBuilder::new()
-                .stack_size(4 * 512 * 512)
+                .stack_size(8 * 1024 * 1024)
                 .num_threads(pool_threads as usize);
             let pool = if cuda.is_none() {
                 builder.thread_name(move |idx| format!("ap-cpu-{}-{}", index, idx))
